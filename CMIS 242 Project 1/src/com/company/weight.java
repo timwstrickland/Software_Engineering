@@ -24,6 +24,19 @@ public class weight {
         normalize();
     }
 
+    public void divide(int divisor) {
+        //Divides ounces by the number of the amount passed in.
+        if (divisor != 0) {
+            this.ounces = toOunces() / divisor;
+            normalize();
+        }
+    }
+
+    public String toString() {
+        return String.format("%.3f", this.pounds) + "lbs" + String.format("%.3f", this.ounces) + "ounces";
+    }
+
+
     private double toOunces() {
         //converts pounds to ounces so that math can be done on the basic term.
         return this.pounds * poundsToOunces + this.ounces;

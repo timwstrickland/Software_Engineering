@@ -6,12 +6,15 @@ package com.company;
    Description: This program will compute the minimum, maximum, and average weight of a collection of weights that is
    read from an input file.
    Revision: 1
-   Dependencies: weight.java
+   Dependencies: weight.java, Project1.java
  */
+
+import java.io.PipedOutputStream;
 
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+	Project1 p = new Project1();
+	p.openFile();
     }
 }
