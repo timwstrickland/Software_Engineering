@@ -9,11 +9,12 @@ package com.company;
    Dependencies: weight.java, Project1.java
  */
 
+import java.io.FileNotFoundException;
 import java.io.PipedOutputStream;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 	Project1 p = new Project1();
 	p.openFile();
     }

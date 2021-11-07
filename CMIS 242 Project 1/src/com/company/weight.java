@@ -2,23 +2,27 @@
 
 package com.company;
 
-public class weight {
+public class Weight {
     //Initialize variables for the weight class
     private double pounds;
     private double ounces;
     private final double poundsToOunces = 16;
 
-    public weight (double pounds, double ounces) {
+    public Weight(double pounds, double ounces) {
         this.pounds = pounds;
         this.ounces = ounces;
     }
 
-    public boolean lessThan (weight w) {
-        //This method needs work
-        return false;
+    public boolean lessThan (Weight w) {
+        if (w.toOunces() < toOunces()) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    public void addTo(weight w) {
+    public void addTo(Weight w) {
         //Adds ounces to the new weight and re-calculates
         this.ounces = this.ounces + w.toOunces();
         normalize();
@@ -33,9 +37,8 @@ public class weight {
     }
 
     public String toString() {
-        return String.format("%.3f", this.pounds) + "lbs" + String.format("%.3f", this.ounces) + "ounces";
+        return String.format("%.3f", this.pounds) + "lbs " + String.format("%.3f", this.ounces) + " ounces";
     }
-
 
     private double toOunces() {
         //converts pounds to ounces so that math can be done on the basic term.
