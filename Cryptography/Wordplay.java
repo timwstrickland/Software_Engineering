@@ -5,6 +5,7 @@
  * Author: Timothy Strickland
  * @version 1
  */
+import java.util.*;
 public class Wordplay {
     public boolean isVowel (char ch) {
         boolean vowelCheck = false;
@@ -17,6 +18,21 @@ public class Wordplay {
         return vowelCheck;     
     }
     
+    public String replaceVowels (String phrase, char ch) {
+        char[] stringToChar = new char[phrase.length()];
+        for (int i = 0; i < phrase.length(); i++) {
+            if(isVowel(phrase.charAt(i)) == true) {
+                stringToChar[i] = ch;
+            }
+            else {
+                stringToChar[i] = phrase.charAt(i);
+            }
+        }
+        String charString = String.valueOf(stringToChar);
+        return charString;
+    }
+    
+    
     public void testIsVowel() {
         System.out.println(isVowel('f'));
         // should return false
@@ -26,5 +42,11 @@ public class Wordplay {
         // should return true
         System.out.println(isVowel('S'));
         // should return false
+    }
+    
+    public void testReplaceVowels() {
+        String testString = replaceVowels("Hello World", '*');
+        //this should return H*ll* W*rld
+        System.out.println(testString);
     }
 }
