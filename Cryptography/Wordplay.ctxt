@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=Wordplay
+comment0.text=\r\n\ Write\ a\ description\ of\ Wordplay\ here.\r\n\ \r\n\ Author\:\ Timothy\ Strickland\r\n\ @version\ 1\r\n
+comment1.params=ch
+comment1.target=boolean\ isVowel(char)
+comment2.params=
+comment2.target=void\ testIsVowel()
+numComments=3
