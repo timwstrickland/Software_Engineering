@@ -1,5 +1,4 @@
 // This class file is part of the CMIS 242 Project 1 package.
-
 package com.company;
 
 public class Weight {
@@ -14,12 +13,7 @@ public class Weight {
     }
 
     public boolean lessThan (Weight w) {
-        if (w.toOunces() < toOunces()) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return w.toOunces() > toOunces();
     }
 
     public void addTo(Weight w) {
@@ -53,3 +47,4 @@ public class Weight {
         }
     }
 }
+
