@@ -2,29 +2,30 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 
-public class Project2 extends Frame implements ActionListener, ItemListener {
+public class Project2 extends Frame implements ActionListener, ItemListener, TextListener {
     //Set Variables
+    private int radioState;
     Button taxButton = new Button("Compute Sales Tax");
     Button clearButton = new Button("Clear Fields");
     Button displayReportButton = new Button("Display Report");
-    Label makeAndModel = new Label("Make and Model");
+    Label make = new Label("Make");
+    Label model = new Label("Model");
     Label salesPrice = new Label("Sales Price");
     Label milesPerGallon = new Label("Miles per Gallon");
     Label weightInPounds = new Label("Weight in Pounds");
     TextField t1 = new TextField ("", 30);
     TextField t2 = new TextField ("", 30);
-    TextField t3 = new TextField ("", 20);
+    TextField t3 = new TextField ("", 30);
     TextField t4 = new TextField ("", 20);
+    TextField t5 = new TextField ("", 20);
     TextArea ta1 = new TextArea("", 1, 20);
     CheckboxGroup vehicleTypeSelected = new CheckboxGroup();
     Checkbox hybrid = new Checkbox("Hybrid", false, vehicleTypeSelected);
     Checkbox electric = new Checkbox("Electric", false, vehicleTypeSelected);
     Checkbox other = new Checkbox("Other", true, vehicleTypeSelected);
+
 
     public Project2() {
         super("Automobile Sales Tax Calculator");
@@ -38,7 +39,8 @@ public class Project2 extends Frame implements ActionListener, ItemListener {
         other.addItemListener(this);
         add(clearButton);
         add(displayReportButton);
-        add(makeAndModel);
+        add(make);
+        add(model);
         add(salesPrice);
         add(milesPerGallon);
         add(weightInPounds);
@@ -46,6 +48,7 @@ public class Project2 extends Frame implements ActionListener, ItemListener {
         add(t2);
         add(t3);
         add(t4);
+        add(t5);
         add(ta1);
         add(hybrid);
         add(electric);
@@ -60,23 +63,31 @@ public class Project2 extends Frame implements ActionListener, ItemListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Automobile a = new Automobile();
-        double salesTax = a.salesTax(30000);
-        ta1.setText("" + salesTax);
-
+        if (e.getSource() == taxButton) {
+            if (radioState == 1) {
+                Hybrid hybrid = new Hybrid(make.getText(), model.getText(), (salesPrice.getText()),
+                        Integer.parseInt(milesPerGallon.getText()));
+                ta1.setText(String.valueOf(hybrid.salesTax(Integer.parseInt(salesPrice.getText()))));
+            }
+        }
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        int radioState;
+
         if (hybrid.getState()) {
-            radioState = 1;
+            this.radioState = 1;
         }
         if (electric.getState()) {
-            radioState = 2;
+            this.radioState = 2;
         }
         if (other.getState()) {
-            radioState = 3;
+            this.radioState = 3;
         }
+    }
+
+    @Override
+    public void textValueChanged(TextEvent e) {
+
     }
 }
