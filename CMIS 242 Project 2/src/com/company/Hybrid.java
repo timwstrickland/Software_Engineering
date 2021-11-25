@@ -3,6 +3,13 @@ package com.company;
 public class Hybrid extends Automobile {
     private int milesPerGallon;
 
+    public Hybrid() {
+        super.setMake("Tesla");
+        super.setModel("Model S");
+        super.setPrice(50000);
+        this.milesPerGallon = 35;
+    }
+
     public Hybrid (String make, String model, int price, int milesPerGallon) {
         super.setMake(make);
         super.setModel(model);

@@ -3,6 +3,7 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.annotation.ElementType;
 
 public class Project2 extends Frame implements ActionListener, ItemListener, TextListener {
     //Set Variables
@@ -65,10 +66,37 @@ public class Project2 extends Frame implements ActionListener, ItemListener, Tex
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == taxButton) {
             if (radioState == 1) {
-                Hybrid hybrid = new Hybrid(make.getText(), model.getText(), (salesPrice.getText()),
-                        Integer.parseInt(milesPerGallon.getText()));
-                ta1.setText(String.valueOf(hybrid.salesTax(Integer.parseInt(salesPrice.getText()))));
+                Hybrid hybrid = new Hybrid(t1.getText(), t2.getText(), (Integer.parseInt(t3.getText())),
+                        Integer.parseInt(t4.getText()));
+                ta1.setText(String.valueOf(hybrid.salesTax(Integer.parseInt(t3.getText()))));
             }
+            else if (radioState == 2) {
+                Electric electric = new Electric(t1.getText(), t2.getText(), (Integer.parseInt(t3.getText())),
+                        Integer.parseInt(t5.getText()));
+                ta1.setText(String.valueOf(electric.salesTax(Integer.parseInt(t3.getText()))));
+            }
+            else {
+                Automobile automobile = new Automobile(t1.getText(), t2.getText(), Integer.parseInt(t3.getText()));
+                ta1.setText(String.valueOf(automobile.salesTax(Integer.parseInt(t3.getText()))));
+            }
+        }
+
+        if (e.getSource() == clearButton) {
+            t1.setText("");
+            t2.setText("");
+            t3.setText("");
+            t4.setText("");
+            t5.setText("");
+            ta1.setText("");
+        }
+
+        if (e.getSource() == displayReportButton) {
+            Frame frame = new Frame();
+            frame.setSize(300, 1200);
+            frame.setLayout(new FlowLayout());
+            TextArea ta2 = new TextArea(5, 50)
+            frame.setVisible(true);
+
         }
     }
 
