@@ -4,9 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.annotation.ElementType;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Project2 extends Frame implements ActionListener, ItemListener, TextListener {
     //Set Variables
+    ArrayList<String> vehicles = new ArrayList<String>();
     private int radioState;
     Button taxButton = new Button("Compute Sales Tax");
     Button clearButton = new Button("Clear Fields");
@@ -69,15 +72,18 @@ public class Project2 extends Frame implements ActionListener, ItemListener, Tex
                 Hybrid hybrid = new Hybrid(t1.getText(), t2.getText(), (Integer.parseInt(t3.getText())),
                         Integer.parseInt(t4.getText()));
                 ta1.setText(String.valueOf(hybrid.salesTax(Integer.parseInt(t3.getText()))));
+                vehicles.add(hybrid.toString());
             }
             else if (radioState == 2) {
                 Electric electric = new Electric(t1.getText(), t2.getText(), (Integer.parseInt(t3.getText())),
                         Integer.parseInt(t5.getText()));
                 ta1.setText(String.valueOf(electric.salesTax(Integer.parseInt(t3.getText()))));
+                vehicles.add(electric.toString());
             }
             else {
                 Automobile automobile = new Automobile(t1.getText(), t2.getText(), Integer.parseInt(t3.getText()));
                 ta1.setText(String.valueOf(automobile.salesTax(Integer.parseInt(t3.getText()))));
+                vehicles.add(automobile.toString());
             }
         }
 
@@ -92,11 +98,12 @@ public class Project2 extends Frame implements ActionListener, ItemListener, Tex
 
         if (e.getSource() == displayReportButton) {
             Frame frame = new Frame();
-            frame.setSize(300, 1200);
+            frame.setSize(500, 300);
             frame.setLayout(new FlowLayout());
-            TextArea ta2 = new TextArea(5, 50)
+            TextArea ta2 = new TextArea(5, 50);
+            frame.add(ta2);
             frame.setVisible(true);
-
+            ta2.setText("" + vehicles);
         }
     }
 

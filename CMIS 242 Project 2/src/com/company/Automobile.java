@@ -46,6 +46,6 @@ public class Automobile {
 
     public String toString() {
         return ("automobile make: " + this.make + "\nautomobile model: " + this.model
-        + "\nprice: " + this.price + "sales tax: " + salesTax(this.price));
+        + "\nprice: " + this.price + "\nsales tax: " + salesTax(this.price));
     }
 }
