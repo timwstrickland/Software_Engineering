@@ -1,5 +1,8 @@
 package com.company;
 
+    // This project creates a GUI that calculates the sales tax of 3 different types of vehicles
+    // The Project2.java file is the main file and requires: Automobile.java, Electric.java and Hybrid.java
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -12,7 +15,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.zip.GZIPInputStream;
 
-public class Project2 extends JFrame implements ActionListener, ItemListener, TextListener {
+public class Project2 extends JFrame implements ActionListener, ItemListener {
     // Set Variables
     // Create 3 panels for the GUI
     private JPanel topPanel;
@@ -200,20 +203,24 @@ public class Project2 extends JFrame implements ActionListener, ItemListener, Te
         jtfWeightInPounds.setValue(0);
         jtfMilesPerGallon.setValue(0);
         other.setSelected(true);
+        // Add text for a tool tip to inform users that the field is numbers only.
         jtfSalesPrice.setToolTipText("This field is formatted for numbers only. Letters and Special Characters will not work\n" +
                 "When erasing the number, please highlight it and type the new number, or press the button Clear Fields");
     }
 
     public static void main(String[] args) {
+        // Set up the main GUI with parameters
         Project2 p2 = new Project2();
         p2.setSize(450, 450);
         p2.setVisible(true);
         p2.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        double x = 1;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // This method checks to see if the Compute Sales Tax button has been pressed.
+        // We check the state of the radio button.
+        // Calculate the tax, based on the button pressed and add the values to the arraylist.
         if (e.getSource() == computeSalesTaxButton) {
             if (radioState == 1) {
                 Hybrid hybrid = new Hybrid(jtfMakeModel.getText(), (Integer.parseInt(jtfSalesPrice.getText())),
@@ -233,7 +240,7 @@ public class Project2 extends JFrame implements ActionListener, ItemListener, Te
                 vehicles.add(automobile.toString());
             }
         }
-
+        // Check for a Clear button press
         if (e.getSource() == clearFieldsButton) {
             jtfMakeModel.setText("");
             jtfSalesPrice.setValue(0);
@@ -241,7 +248,7 @@ public class Project2 extends JFrame implements ActionListener, ItemListener, Te
             jtfWeightInPounds.setValue(0);
             jtfSalesTax.setText("");
         }
-
+        //Check for a Display Report button press
         if (e.getSource() == displayReportButton) {
             JFrame frame = new JFrame();
             frame.setSize(500, 300);
@@ -255,7 +262,8 @@ public class Project2 extends JFrame implements ActionListener, ItemListener, Te
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-
+        // This method checks the state of the button pressed and then changes the radio state.
+        // We also grey out fields, based on the state.
         if (hybrid.isSelected()) {
             this.radioState = 1;
             jtfMilesPerGallon.setEditable(true);
@@ -271,10 +279,5 @@ public class Project2 extends JFrame implements ActionListener, ItemListener, Te
             jtfMilesPerGallon.setEditable(false);
             jtfWeightInPounds.setEditable(false);
         }
-    }
-
-    @Override
-    public void textValueChanged(TextEvent e) {
-
     }
 }
