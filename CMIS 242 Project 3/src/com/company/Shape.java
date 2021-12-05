@@ -1,6 +1,5 @@
 package com.company;
 
-import javax.swing.*;
 import java.awt.*;
 
 public abstract class Shape extends Rectangle {
@@ -15,9 +14,9 @@ public abstract class Shape extends Rectangle {
         shapeCount++;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+    public void setColor(Graphics g) {
+        g.setColor(color);
+        }
 
     public boolean getSolid() {
         return this.isFilled;

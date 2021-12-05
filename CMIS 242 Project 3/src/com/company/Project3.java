@@ -1,9 +1,14 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
-public class Project3 extends JFrame {
+public class Project3 extends JFrame implements ActionListener {
     // create JLabels
     private JLabel shapeTypeLabel;
     private JLabel fillTypeLabel;
@@ -17,21 +22,22 @@ public class Project3 extends JFrame {
     private JComboBox<String> fillTypeComboBox;
     private JComboBox<String> colorTypeComboBox;
     // create Arrays for combo boxes
-    private final String[] SHAPETYPE= {"Oval", "Rectangle"};
+    private final String[] SHAPETYPE = {"Oval", "Rectangle"};
     private final String[] FILLTYPE = {"Solid", "Hollow"};
     private final String[] COLORTYPE = {"Black", "Red", "Orange", "Yellow", "Green", "Blue", "Magenta"};
+    private final Color[] COLORS = {Color.black, Color.red, Color.orange, Color.yellow, Color.green, Color.blue, Color.magenta};
     // create Text Fields
-    private JTextField widthTextField;
-    private JTextField heightTextField;
-    private JTextField xCoordinateTextField;
-    private JTextField yCoordinateTextField;
+    private JFormattedTextField widthTextField;
+    private JFormattedTextField heightTextField;
+    private JFormattedTextField xCoordinateTextField;
+    private JFormattedTextField yCoordinateTextField;
     // create buttons
     private JButton drawButton;
     // create JPanels
     private JPanel leftPanel;
     private JPanel midPanel;
-    private JPanel rightPanel;
     private JPanel bottomPanel;
+    private Drawing shapeDrawing;
 
     public Project3() {
         //create the frame
@@ -51,6 +57,25 @@ public class Project3 extends JFrame {
         midPanel = new JPanel();
         midPanel.setLayout(new GridBagLayout());
         add(midPanel, gbc);
+        shapeDrawing = new Drawing();
+        gbc.gridx = 2;
+        add(shapeDrawing, gbc);
+        shapeDrawing.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Shape Drawing",
+                TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
+        shapeDrawing.setMaximumSize(getPreferredSize());
+        GridLayout grid = new GridLayout();
+        shapeDrawing.setLayout(grid);
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        bottomPanel = new JPanel();
+        bottomPanel.setLayout(new GridBagLayout());
+        add(bottomPanel, gbc);
+        gbc = new GridBagConstraints();
+        drawButton = new JButton("Draw");
+        drawButton.addActionListener(this);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        bottomPanel.add(drawButton);
         gbc = new GridBagConstraints();
         gbc.insets = new Insets(18,0,0,30);
         gbc.anchor = GridBagConstraints.WEST;
@@ -94,29 +119,69 @@ public class Project3 extends JFrame {
         colorTypeComboBox.setPreferredSize(comboBoxSize);
         gbc.gridy = 2;
         midPanel.add(colorTypeComboBox, gbc);
-        widthTextField = new JTextField();
+        NumberFormat nf = NumberFormat.getIntegerInstance();
+        nf.setGroupingUsed(false);
+        NumberFormatter nft = new NumberFormatter(nf);
+        nft.setAllowsInvalid(false);
+        widthTextField = new JFormattedTextField(nft);
         widthTextField.setColumns(10);
         gbc.gridy = 3;
         midPanel.add(widthTextField, gbc);
-        heightTextField = new JTextField();
+        heightTextField = new JFormattedTextField(nft);
         heightTextField.setColumns(10);
         gbc.gridy = 4;
         midPanel.add(heightTextField, gbc);
-        xCoordinateTextField = new JTextField();
+        xCoordinateTextField = new JFormattedTextField(nft);
         xCoordinateTextField.setColumns(10);
         gbc.gridy = 5;
         midPanel.add(xCoordinateTextField, gbc);
-        yCoordinateTextField = new JTextField();
+        yCoordinateTextField = new JFormattedTextField(nft);
         yCoordinateTextField.setColumns(10);
         gbc.gridy = 6;
         midPanel.add(yCoordinateTextField, gbc);
-
+        widthTextField.setValue(0);
+        heightTextField.setValue(0);
+        xCoordinateTextField.setValue(0);
+        yCoordinateTextField.setValue(0);
     }
 
     public static void main(String[] args) {
         Project3 p3 = new Project3();
-        p3.setSize(600, 600);
+        p3.setSize(700, 700);
         p3.setVisible(true);
         p3.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    private Shape getShape(Drawing panel) {
+        this.shapeDrawing = panel;
+        Shape s;
+        int w = Integer.parseInt(widthTextField.getText());
+        int h = Integer.parseInt(heightTextField.getText());
+        int x = Integer.parseInt(xCoordinateTextField.getText());
+        int y = Integer.parseInt(yCoordinateTextField.getText());
+        boolean isFilled;
+        isFilled = fillTypeComboBox.getSelectedIndex() == 0;
+        int colorValue = colorTypeComboBox.getSelectedIndex();
+        if (shapeTypeComboBox.getSelectedIndex() == 0) {
+            s = new Oval(new Rectangle(x,y,w,h), COLORS[colorValue],
+                    isFilled);
+        }
+        else {
+            s = new Rectangular(new Rectangle(x,y,w,h), COLORS[colorValue],
+                    isFilled);
+        }
+        return s;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == drawButton) {
+                Shape selectedShape = getShape(shapeDrawing);
+                try {
+                    shapeDrawing.drawShape(selectedShape);
+                } catch (OutsideBounds outsideBounds) {
+                    outsideBounds.printStackTrace();
+                }
+            }
     }
 }

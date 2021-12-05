@@ -11,7 +11,8 @@ public class Drawing extends JPanel {
         if(shape != null) {
             String numberOfShapes = Integer.toString(shape.getNoOfShapes());
             shape.draw(g);
-            g.drawString(numberOfShapes, 0, 0);
+            shape.setColor(g);
+            g.drawString(numberOfShapes, 5, 30);
         }
     }
 
@@ -26,7 +27,7 @@ public class Drawing extends JPanel {
         }
         else {
             this.shape = s;
-            repaint(this.shape);
+            repaint();
         }
     }
 }
