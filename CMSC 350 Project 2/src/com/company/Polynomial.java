@@ -41,6 +41,7 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
             return next;
         }
     }
+
     // create main class variables
     Term head;
     int currentSize;
@@ -81,15 +82,23 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
     @Override
     public Iterator<Term> iterator() {
         return new Iterator<Term>() {
+            // assign our current variable and get the head node.
             private Term current = getHead();
+
             @Override
             public boolean hasNext() {
-                return false;
+                // return true if there exists another coefficient and exponent term.
+                return current != null && current.getNext() != null;
             }
 
             @Override
             public Term next() {
-                return null;
+                // assign our data values to current from the current node
+                Term data = current;
+                // move to the next node
+                current = current.next;
+                // return our data
+                return data;
             }
         };
     }

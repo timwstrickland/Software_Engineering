@@ -12,7 +12,6 @@ public class Main {
         int returnVal = polynomialFile.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = polynomialFile.getSelectedFile();
-
         }
 
     }
