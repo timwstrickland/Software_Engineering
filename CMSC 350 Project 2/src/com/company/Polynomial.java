@@ -83,7 +83,7 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
     public Iterator<Term> iterator() {
         return new Iterator<Term>() {
             // assign our current variable and get the head node.
-            private Term current = getHead();
+            Term current = getHead();
 
             @Override
             public boolean hasNext() {
@@ -123,12 +123,12 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
         return sb.toString();
     }
 
-    // Unique methods
-    // addTerm doesn't work and needs to be expanded upon.
     public void addTerm(double coefficient, int exponent) {
+        // This method adds a term at the beginning of the linked list
         Term term = new Term(coefficient, exponent);
         term.next = head;
         head = term;
+        // System.out.println(head.getCoefficient() + " " + head.getExponent());
         currentSize++;
     }
 }

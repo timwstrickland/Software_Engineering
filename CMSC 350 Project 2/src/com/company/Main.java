@@ -22,8 +22,10 @@ public class Main {
                 Scanner scanner = new Scanner(file);
                 String tempString = scanner.nextLine();
                 Polynomial polynomial = new Polynomial(tempString);
-                System.out.println(polynomial);
-                polyList.add(polynomial);
+                while(polynomial.iterator().hasNext()) {
+                    System.out.println(polynomial.iterator().next().getCoefficient() + " " +
+                            polynomial.iterator().next().getExponent());
+                }
             }
             catch (FileNotFoundException e){
                 JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "The File does not exist!");
