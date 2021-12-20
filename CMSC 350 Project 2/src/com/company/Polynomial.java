@@ -47,12 +47,12 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
     int currentSize;
 
     // Constructor
-    public Polynomial (String fromFile) {
+    public Polynomial(String fromFile) {
         head = null;
         currentSize = 0;
         Scanner fileInput = new Scanner(fromFile);
-        while(fileInput.hasNext()) {
-            addTerm(fileInput.nextDouble(), fileInput.nextInt());
+        while (fileInput.hasNext()) {
+            addTerm(Double.parseDouble(fileInput.next()), Integer.parseInt(fileInput.next()));
         }
     }
 
@@ -105,11 +105,26 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
 
     @Override
     public String toString() {
-        return "";
+        StringBuilder sb = new StringBuilder("");
+        Term current = head;
+        while (current.next != null) {
+            if (current.coefficient > 1) {
+                sb.append(current.coefficient);
+            }
+            if (current.exponent > 0 && current.coefficient > 0) {
+                if (current.exponent > 1) {
+                    sb.append("x^").append(current.exponent).append(" + ");
+                } else {
+                    sb.append("x").append(" + ");
+                }
+            }
+            current = current.next;
+        }
+        return sb.toString();
     }
 
     // Unique methods
-
+    // addTerm doesn't work and needs to be expanded upon.
     public void addTerm(double coefficient, int exponent) {
         Term term = new Term(coefficient, exponent);
         term.next = head;
@@ -117,3 +132,5 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
         currentSize++;
     }
 }
+
+
