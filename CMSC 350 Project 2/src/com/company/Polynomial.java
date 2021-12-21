@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynomial> {
+
     // create inner static class so no one can access the Node
     class Term implements Iterator<Term> {
         double coefficient;
@@ -99,6 +100,24 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
         this.currentSize = currentSize;
     }
 
+    @Override
+    public Iterator<Term> iterator() {
+
+        return new Iterator<Term>() {
+            Term current = head;
+            @Override
+            public boolean hasNext() {
+                return current != null && current.next != null;
+            }
+
+            @Override
+            public Term next() {
+                Term data = current;
+                current = current.next;
+                return data;
+            }
+        };
+    }
     // Overridden methods
     @Override
     public int compareTo(Polynomial other) {
@@ -125,11 +144,6 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
             return -1;
         }
         return 1;
-    }
-
-    @Override
-    public Iterator<Term> iterator() {
-        return head;
     }
 
     public String toString() {
