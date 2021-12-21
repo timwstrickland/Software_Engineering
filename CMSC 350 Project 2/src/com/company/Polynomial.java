@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynomial> {
     // create inner static class so no one can access the Node
-    static class Term {
+    class Term implements Iterator<Term> {
         double coefficient;
         int exponent;
         private Term next;
@@ -40,6 +40,16 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
         public Term getNext() {
             return next;
         }
+
+        @Override
+        public boolean hasNext() {
+            return next != null;
+        }
+
+        @Override
+        public Term next() {
+            return next;
+        }
     }
 
     // create main class variables
@@ -47,12 +57,28 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
     int currentSize;
 
     // Constructor
-    public Polynomial(String fromFile) {
+    public Polynomial(String line) {
+        //Builds the string read in from a line in the file that was passed into the main method.
         head = null;
         currentSize = 0;
-        Scanner fileInput = new Scanner(fromFile);
-        while (fileInput.hasNext()) {
-            addTerm(Double.parseDouble(fileInput.next()), Integer.parseInt(fileInput.next()));
+        double[] terms = new double[10];
+        Scanner scan = new Scanner(line);
+        while (scan.hasNext()) {
+            try {
+                double coef = scan.nextDouble();
+                int exp = scan.nextInt();
+                terms[exp] += coef;
+            }
+            catch (Exception e) {
+                throw new InvalidPolynomialSyntax();
+            }
+        }
+        for (int i = 0; i < terms.length; i++) {
+            double coef = terms[i];
+            int exp = i;
+            if (coef != 0) {
+                addTerm(coef, exp);
+            }
         }
     }
 
@@ -75,47 +101,50 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
 
     // Overridden methods
     @Override
-    public int compareTo(Polynomial next) {
-        return 0;
+    public int compareTo(Polynomial other) {
+        //This method compares different 2 different polynomials and returns a positive number if greater.
+        //A negative number if lesser and a 0 if equal.
+        Term myCurrent = head;
+        Term otherCurrent = other.head;
+        while (myCurrent != null && otherCurrent != null) {
+            int exponentDiff = myCurrent.exponent - otherCurrent.exponent;
+            if (exponentDiff != 0) {
+                return exponentDiff;
+            }
+            int coefDiff = Double.compare(myCurrent.coefficient, otherCurrent.coefficient);
+            if (coefDiff != 0) {
+                return coefDiff;
+            }
+            myCurrent = myCurrent.next;
+            otherCurrent = otherCurrent.next;
+        }
+        if (myCurrent == null && otherCurrent == null) {
+            return 0;
+        }
+        if (myCurrent == null) {
+            return -1;
+        }
+        return 1;
     }
 
     @Override
     public Iterator<Term> iterator() {
-        return new Iterator<Term>() {
-            // assign our current variable and get the head node.
-            Term current = getHead();
-
-            @Override
-            public boolean hasNext() {
-                // return true if there exists another coefficient and exponent term.
-                return current != null && current.getNext() != null;
-            }
-
-            @Override
-            public Term next() {
-                // assign our data values to current from the current node
-                Term data = current;
-                // move to the next node
-                current = current.next;
-                // return our data
-                return data;
-            }
-        };
+        return head;
     }
 
-    @Override
     public String toString() {
+        // builds a string based on the value of the Term(s) in the linked list.
         StringBuilder sb = new StringBuilder("");
         Term current = head;
-        while (current.next != null) {
-            if (current.coefficient > 1) {
-                sb.append(current.coefficient);
-            }
-            if (current.exponent > 0 && current.coefficient > 0) {
+        while (current != null) {
+            sb.append(current.coefficient);
+            if (current.exponent > 0) {
+                sb.append("x");
                 if (current.exponent > 1) {
-                    sb.append("x^").append(current.exponent).append(" + ");
-                } else {
-                    sb.append("x").append(" + ");
+                    sb.append("^").append(current.exponent);
+                }
+                if (current.next != null) {
+                    sb.append(" + ");
                 }
             }
             current = current.next;
@@ -128,7 +157,6 @@ public class Polynomial implements Iterable<Polynomial.Term>, Comparable<Polynom
         Term term = new Term(coefficient, exponent);
         term.next = head;
         head = term;
-        // System.out.println(head.getCoefficient() + " " + head.getExponent());
         currentSize++;
     }
 }

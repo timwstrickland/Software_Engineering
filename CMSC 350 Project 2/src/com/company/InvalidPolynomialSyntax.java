@@ -1,6 +1,6 @@
 package com.company;
 
-public class InvalidPolynomialSyntax extends Exception{
+public class InvalidPolynomialSyntax extends RuntimeException{
     // custom exception for specific issue.
     public InvalidPolynomialSyntax() {
         super();

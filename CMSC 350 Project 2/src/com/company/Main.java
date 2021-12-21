@@ -9,9 +9,9 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
-    public static ArrayList<Polynomial> polyList = new ArrayList<>();
+    public static ArrayList<Polynomial> polyList;
     public static void main(String[] args) {
-        ArrayList<String> pList = new ArrayList<>();
+        polyList = new ArrayList<>();
         JFileChooser polynomialFile = new JFileChooser();
         polynomialFile.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         polynomialFile.setCurrentDirectory(new File(System.getProperty("user.dir")));
@@ -20,11 +20,11 @@ public class Main {
             File file = polynomialFile.getSelectedFile();
             try {
                 Scanner scanner = new Scanner(file);
-                String tempString = scanner.nextLine();
-                Polynomial polynomial = new Polynomial(tempString);
-                while(polynomial.iterator().hasNext()) {
-                    System.out.println(polynomial.iterator().next().getCoefficient() + " " +
-                            polynomial.iterator().next().getExponent());
+                while (scanner.hasNextLine()) {
+                    String tempString = scanner.nextLine();
+                    Polynomial polynomial = new Polynomial(tempString);
+                    polyList.add(polynomial);
+                    System.out.println(polynomial);
                 }
             }
             catch (FileNotFoundException e){
@@ -35,10 +35,7 @@ public class Main {
             }
         }
         System.out.println(polyList);
+        polyList.sort(null);
+        System.out.println(polyList);
     }
-
-    // Place holder to check weak order of the polynomial
-
-
-    // Place holder to check Strong order of the polynomial
 }
