@@ -2,8 +2,10 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class GuiClass extends JFrame {
+public class GuiClass extends JFrame implements ActionListener {
     // This class constructs the GUI to be used with the other classes.
     // Set variables
     // Create JPanels to be used
@@ -25,6 +27,8 @@ public class GuiClass extends JFrame {
     private JButton height;
     private JButton nodes;
     private JButton inOrder;
+    // Create an empty Binary tree
+    BinaryTree bt = null;
 
     public GuiClass() {
         // This constructor will setup the gui from scratch.
@@ -88,7 +92,15 @@ public class GuiClass extends JFrame {
         gbc.gridx = 1;
         outputTextField = new JTextField();
         outputTextField.setColumns(25);
+        outputTextField.setEditable(false);
         bottomPanel.add(outputTextField, gbc);
+        // add Action listeners
+        makeTree.addActionListener(this);
+        isFull.addActionListener(this);
+        isProper.addActionListener(this);
+        height.addActionListener(this);
+        nodes.addActionListener(this);
+        inOrder.addActionListener(this);
     }
 
     public static void main(String[] args) {
@@ -96,5 +108,26 @@ public class GuiClass extends JFrame {
 	gc.setSize(550, 250);
 	gc.setVisible(true);
 	gc.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // This method implements an action when a button is pressed.
+        // create an instance of the BinaryTree class to be used
+        if(e.getSource() == makeTree) {
+            // This statement checks to see if the makeTree button has been pressed.
+            bt = new BinaryTree(enterTreeTextField.getText());
+            outputTextField.setText("The Tree has been built");
+        }
+        else if (e.getSource() == isFull) {
+            // This statement checks to see if the isFull button has been pressed.
+            if(bt != null) {
+            }
+
+        }
+        else if (e.getSource() == isProper) {
+            // This statement checks to see if the isProper button has been pressed.
+        }
+
     }
 }
