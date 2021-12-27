@@ -123,11 +123,18 @@ public class GuiClass extends JFrame implements ActionListener {
             // This statement checks to see if the isFull button has been pressed.
             if(bt != null) {
             }
-
         }
         else if (e.getSource() == isProper) {
             // This statement checks to see if the isProper button has been pressed.
         }
-
+        else if (e.getSource() == height) {
+            // This statement checks to see if the Height button has been pressed.
+        }
+        else if (e.getSource() == nodes) {
+            // This statement checks to see if the Nodes button has been pressed.
+            if(bt != null) {
+                outputTextField.setText("This tree has " + bt.getNodes() + "nodes");
+            }
+        }
     }
 }

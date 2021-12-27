@@ -1,9 +1,12 @@
 package com.company;
 
 public class BinaryTree {
+    int treeSize;
 
     public BinaryTree(String line) {
         // Constructor that sets up the actual tree from the String that was passed in from the GUI.
+        // Keeps track of the Tree's Size.
+        treeSize=0;
         makeTree(line);
     }
     static class Node {
@@ -29,6 +32,7 @@ public class BinaryTree {
                     // This means there is no node yet, so we create the root node.
                     node = new Node(line.charAt(i + 1));
                     System.out.println("the root node is: " + line.charAt(i + 1));
+                    treeSize++;
                 }
                 else if (node.left == null){
                     // This means there is a node, so we add a node and set the parent to the root node.
@@ -36,12 +40,14 @@ public class BinaryTree {
                     node.left.parent = node;
                     node = node.left;
                     System.out.println("The next left node is: " + line.charAt(i + 1));
+                    treeSize++;
                 }
                 else {
                     node.right = new Node(line.charAt(i + 1));
                     node.right.parent = node;
                     node = node.right;
                     System.out.println("The next right node is: " + line.charAt(i + 1));
+                    treeSize++;
                 }
                 // set the left and right child to null.
                 node.left = null;
@@ -86,8 +92,7 @@ public class BinaryTree {
     }
 
     private int nodes() {
-        // This method will return the total number of nodes present in the tree.
-        return 0;
+        return treeSize;
     }
 
     private String inOrder() {
@@ -101,6 +106,10 @@ public class BinaryTree {
 
     public boolean isTreeFull() {
         return isFull();
+    }
+
+    public int getNodes() {
+        return nodes();
     }
 
     
